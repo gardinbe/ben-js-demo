@@ -1,36 +1,28 @@
-import { AnonList, type Component, html, reactive } from 'ben-js';
+// oxlint-disable no-alert
 
-import { Btn } from '~/lib/components/Btn';
+import { AnonList, type Component, html, reactive } from 'ben-js'
 
-import { type Todo, TodoItem } from './TodoItem';
+import { Btn } from '~/lib/components/Btn'
+
+import { type Todo, TodoItem } from './TodoItem'
 
 export const TodoList = (): Component => {
-  const todos = reactive(load());
+  const todos = reactive(load())
 
-  /**
-   * Adds a new item to the list.
-   */
-  const add = (newTodo: Todo): void => {
-    todos.value = [...todos.value, newTodo];
-  };
+  const add = (newTodo: Todo) => {
+    todos.value = [...todos.value, newTodo]
+  }
 
-  /**
-   * Removes the last item from the list.
-   */
-  const pop = (): void => {
-    todos.value = todos.value.slice(0, -1);
-  };
-
-  const logMessage = (): void => {
-    console.log('Hello world!');
-  };
+  const pop = () => {
+    todos.value = todos.value.slice(0, -1)
+  }
 
   return html`
     <div class="flex flex-col gap-8">
       <div
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
       >
-        ${AnonList(() => todos.value.map((todo) => TodoItem(todo)))}
+        ${AnonList(() => todos.value.map(todo => TodoItem(todo)))}
       </div>
       <div class="flex gap-4">
         ${Btn(
@@ -43,7 +35,7 @@ export const TodoList = (): Component => {
                 id: todos.value.length + 1,
                 priority: 0,
                 title: prompt('Please enter the title') ?? '',
-              });
+              })
             },
           },
           'Add',
@@ -57,7 +49,7 @@ export const TodoList = (): Component => {
         ${Btn(
           {
             onClick: () => {
-              save(todos.value);
+              save(todos.value)
             },
           },
           'Save',
@@ -65,7 +57,7 @@ export const TodoList = (): Component => {
         ${Btn(
           {
             onClick: () => {
-              todos.value = Preset;
+              todos.value = Preset
             },
           },
           'Load preset',
@@ -74,30 +66,28 @@ export const TodoList = (): Component => {
     </div>
   `.hook({
     connected: () => {
-      addEventListener('click', logMessage);
+      addEventListener('click', logMessage)
     },
     disconnected: () => {
-      removeEventListener('click', logMessage);
+      removeEventListener('click', logMessage)
     },
-  });
-};
+  })
+}
 
-/**
- * Loads todos from local storage.
- */
-const load = (): Todo[] => {
-  const raw = localStorage.getItem('todos');
-  return raw ? (JSON.parse(raw) as Todo[]) : [];
-};
+const logMessage = () => {
+  console.log('Hello world!')
+}
 
-/**
- * Saves todos to local storage.
- */
-const save = (todos: Todo[]): void => {
-  localStorage.setItem('todos', JSON.stringify(todos));
-};
+const load = (): Array<Todo> => {
+  const raw = localStorage.getItem('todos')
+  return raw ? (JSON.parse(raw) as Array<Todo>) : []
+}
 
-const Preset: Todo[] = [
+const save = (todos: Array<Todo>) => {
+  localStorage.setItem('todos', JSON.stringify(todos))
+}
+
+const Preset: Array<Todo> = [
   {
     completed: false,
     content: 'Milk, eggs, bread',
@@ -170,4 +160,4 @@ const Preset: Todo[] = [
     priority: 2,
     title: 'Go for a hike',
   },
-];
+]

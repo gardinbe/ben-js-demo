@@ -1,17 +1,17 @@
-import '~/lib/styles/main.css';
-import { enableDevMode, printTree } from 'ben-js';
+import '~/lib/styles/main.css'
+import { enableDevMode, printTree } from 'ben-js'
 
-import { App } from '~/App';
+import { App } from '~/App'
 
-enableDevMode();
+enableDevMode()
 
-const app = App();
-app.mount('#app');
+const app = App()
+app.mount('#app')
 
 // @ts-expect-error this is for development
 window.printTree = () => {
-  printTree(app);
-};
+  printTree(app)
+}
 
 // @ts-expect-error this is for development
-window.app = app;
+window.app = app

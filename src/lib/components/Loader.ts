@@ -1,4 +1,4 @@
-import { html } from 'ben-js';
+import { html } from 'ben-js'
 
 export const Loader = () => {
   return html`
@@ -23,5 +23,5 @@ export const Loader = () => {
         }
       }
     </style>
-  `;
-};
+  `
+}

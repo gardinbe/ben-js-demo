@@ -1,0 +1,9 @@
+{
+  "extends": "@gardinbe/config/tsconfig/client",
+  "compilerOptions": {
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  },
+  "include": ["./src/"]
+}

@@ -1,64 +1,64 @@
 export type Ability = {
-  ability: NamedAPIResource;
-  is_hidden: boolean;
-  slot: number;
-};
+  ability: NamedAPIResource
+  is_hidden: boolean
+  slot: number
+}
 
 export type Move = {
-  move: NamedAPIResource;
-  version_group_details: {
-    level_learned_at: number;
-    move_learn_method: NamedAPIResource;
-    version_group: NamedAPIResource;
-  }[];
-};
+  move: NamedAPIResource
+  version_group_details: Array<{
+    level_learned_at: number
+    move_learn_method: NamedAPIResource
+    version_group: NamedAPIResource
+  }>
+}
 
 export type NamedAPIResource = {
-  name: string;
-  url: string;
-};
+  name: string
+  url: string
+}
 
 export type Pokemon = {
-  abilities: Ability[];
-  base_experience: number;
-  forms: NamedAPIResource[];
-  height: number;
-  id: number;
-  is_default: boolean;
-  moves: Move[];
-  name: string;
-  order: number;
-  species: NamedAPIResource;
-  sprites: Sprites;
-  stats: Stat[];
-  types: Type[];
-  weight: number;
-};
+  abilities: Array<Ability>
+  base_experience: number
+  forms: Array<NamedAPIResource>
+  height: number
+  id: number
+  is_default: boolean
+  moves: Array<Move>
+  name: string
+  order: number
+  species: NamedAPIResource
+  sprites: Sprites
+  stats: Array<Stat>
+  types: Array<Type>
+  weight: number
+}
 
 export type Sprites = {
-  back_default: null | string;
-  back_female: null | string;
-  back_shiny: null | string;
-  back_shiny_female: null | string;
-  front_default: null | string;
-  front_female: null | string;
-  front_shiny: null | string;
-  front_shiny_female: null | string;
+  back_default: string | null
+  back_female: string | null
+  back_shiny: string | null
+  back_shiny_female: string | null
+  front_default: string | null
+  front_female: string | null
+  front_shiny: string | null
+  front_shiny_female: string | null
   other?: {
     [key: string]: {
-      front_default: null | string;
-      front_shiny: null | string;
-    };
-  };
-};
+      front_default: string | null
+      front_shiny: string | null
+    }
+  }
+}
 
 export type Stat = {
-  base_stat: number;
-  effort: number;
-  stat: NamedAPIResource;
-};
+  base_stat: number
+  effort: number
+  stat: NamedAPIResource
+}
 
 export type Type = {
-  slot: number;
-  type: NamedAPIResource;
-};
+  slot: number
+  type: NamedAPIResource
+}

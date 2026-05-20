@@ -1,2 +1,4 @@
 packages:
   - '../ben-js/packages/*'
+allowBuilds:
+  esbuild: false

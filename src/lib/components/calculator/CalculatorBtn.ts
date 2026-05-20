@@ -1,17 +1,27 @@
-import { type Component, derived, html, normalize, type Props, ref } from 'ben-js';
+import {
+  type Component,
+  derived,
+  html,
+  normalize,
+  type Props,
+  ref,
+} from 'ben-js'
 
 export type CalculatorBtnProps = Props<{
-  onClick: () => void;
-  type: 'equals' | 'number' | 'operation';
-}>;
+  type: 'equals' | 'number' | 'operation'
+  onClick: () => void
+}>
 
-export const CalculatorBtn = (props: CalculatorBtnProps, slot: unknown): Component => {
-  const { onClick, type } = normalize(props);
-  const btn = ref();
+export const CalculatorBtn = (
+  props: CalculatorBtnProps,
+  slot: unknown,
+): Component => {
+  const { onClick, type } = normalize(props)
+  const btn = ref()
 
   btn.on('click', () => {
-    onClick.value();
-  });
+    onClick.value()
+  })
 
   return html`
     <button
@@ -26,5 +36,5 @@ export const CalculatorBtn = (props: CalculatorBtnProps, slot: unknown): Compone
     >
       ${slot}
     </button>
-  `;
-};
+  `
+}

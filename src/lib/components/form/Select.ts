@@ -1,32 +1,41 @@
-import { attrs, type Component, html, List, normalize, type Props, ref } from 'ben-js';
+import {
+  attrs,
+  type Component,
+  html,
+  List,
+  normalize,
+  type Props,
+  ref,
+} from 'ben-js'
 
 export type SelectOption = {
-  default?: boolean;
-  disabled?: boolean;
-  label: string;
-  selected?: boolean;
-  value: string;
-};
+  label: string
+  value: string
+  default?: boolean
+  disabled?: boolean
+  selected?: boolean
+}
 
 export type SelectProps = Props<{
-  autocomplete?: string;
-  label: string;
-  name: string;
-  onUpdate: (value: string) => void;
-  options: SelectOption[];
-  placeholder: string;
-  type?: string;
-}>;
+  label: string
+  name: string
+  options: Array<SelectOption>
+  placeholder: string
+  autocomplete?: string
+  type?: string
+  onUpdate: (value: string) => void
+}>
 
 export const Select = (props: SelectProps): Component => {
-  const { autocomplete, label, name, onUpdate, options, placeholder, type } = normalize(props);
+  const { autocomplete, label, name, onUpdate, options, placeholder, type } =
+    normalize(props)
 
-  const select = ref<HTMLSelectElement>();
-  const uuid = crypto.randomUUID();
+  const select = ref<HTMLSelectElement>()
+  const uuid = crypto.randomUUID()
 
   select.on('input', () => {
-    onUpdate.value(select.el!.value);
-  });
+    onUpdate.value(select.el!.value)
+  })
 
   return html` <div class="flex flex-col gap-2">
     <label for="${uuid}">${label}</label>
@@ -42,7 +51,7 @@ export const Select = (props: SelectProps): Component => {
       })}
     >
       ${List(() =>
-        options.value.map((option) => ({
+        options.value.map(option => ({
           component: html`<option
             ${attrs({
               default: option.default,
@@ -57,5 +66,5 @@ export const Select = (props: SelectProps): Component => {
         })),
       )}
     </select>
-  </div>`;
-};
+  </div>`
+}

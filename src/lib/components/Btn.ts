@@ -1,17 +1,17 @@
-import { type Component, html, normalize, type Props, ref } from 'ben-js';
+import { type Component, html, normalize, type Props, ref } from 'ben-js'
 
 export type BtnProps = {
-  onClick?: (ev: MouseEvent) => void;
-  type?: 'button' | 'reset' | 'submit';
-};
+  type?: 'button' | 'reset' | 'submit'
+  onClick?: (ev: MouseEvent) => void
+}
 
 export const Btn = (props: Props<BtnProps>, slot: unknown): Component => {
-  const { onClick, type } = normalize(props);
-  const btn = ref();
+  const { onClick, type } = normalize(props)
+  const btn = ref()
 
-  btn.on('click', (ev) => {
-    onClick?.value?.(ev);
-  });
+  btn.on('click', ev => {
+    onClick?.value?.(ev)
+  })
 
   return html`
     <button
@@ -21,5 +21,5 @@ export const Btn = (props: Props<BtnProps>, slot: unknown): Component => {
     >
       ${slot}
     </button>
-  `;
-};
+  `
+}

@@ -1,230 +1,216 @@
-import { html, reactive } from 'ben-js';
+import { html, reactive } from 'ben-js'
 
-import { CalculatorBtn } from '~/lib/components/calculator/CalculatorBtn';
+import { CalculatorBtn } from '~/lib/components/calculator/CalculatorBtn'
 
 export const Calculator = () => {
-  const prev = reactive(0);
-  const next = reactive(0);
-  const awaitingInput = reactive(true);
-  const display = reactive(EmptyDisplay);
+  const prevValue = reactive(0)
+  const nextValue = reactive(0)
+  const awaitingInput = reactive(true)
+  const display = reactive(EmptyDisplay)
 
-  let currentOperation: null | Operation = null;
+  let currentOperation: Operation | null = null
 
-  /**
-   * Executes the current operation.
-   */
-  const exec = (): number => currentOperation?.(prev.value, next.value) ?? next.value;
+  const exec = (): number =>
+    currentOperation?.(prevValue.value, nextValue.value) ?? nextValue.value
 
-  /**
-   * Completes the previous operation and loads a new one.
-   * @param operation - Operation to load.
-   */
-  const load = (operation: Operation): void => {
-    prev.value = exec();
-    next.value = 0;
-    awaitingInput.value = true;
-    display.value = `${prev.value}`;
-    currentOperation = operation;
-  };
+  const load = (operation: Operation) => {
+    prevValue.value = exec()
+    nextValue.value = 0
+    awaitingInput.value = true
+    display.value = `${prevValue.value}`
+    currentOperation = operation
+  }
 
-  /**
-   * Finishes the current operation.
-   */
-  const finish = (): void => {
-    next.value = exec();
-    prev.value = 0;
-    awaitingInput.value = true;
-    display.value = `${next.value}`;
-    currentOperation = null;
-  };
+  const finish = () => {
+    nextValue.value = exec()
+    prevValue.value = 0
+    awaitingInput.value = true
+    display.value = `${nextValue.value}`
+    currentOperation = null
+  }
 
-  /**
-   * Resets the calculator.
-   */
-  const reset = (): void => {
-    prev.value = 0;
-    next.value = 0;
-    awaitingInput.value = true;
-    display.value = EmptyDisplay;
-    currentOperation = null;
-  };
+  const reset = () => {
+    prevValue.value = 0
+    nextValue.value = 0
+    awaitingInput.value = true
+    display.value = EmptyDisplay
+    currentOperation = null
+  }
 
-  /**
-   * Appends a character to the display.
-   * @param char - Character to append.
-   */
-  const append = (char: string): void => {
+  const append = (char: string) => {
     if (awaitingInput.value) {
-      display.value = '';
-      awaitingInput.value = false;
+      display.value = ''
+      awaitingInput.value = false
     }
 
-    display.value = display.value + char;
-    next.value = parseFloat(display.value);
-  };
+    display.value = display.value + char
+    nextValue.value = Number.parseFloat(display.value)
+  }
 
   return html`
-    <div class="w-full flex-1 flex flex-col gap-4 p-4 bg-gray-800 sm:flex-0 sm:w-96">
+    <div
+      class="w-full flex-1 flex flex-col gap-4 p-4 bg-gray-800 sm:flex-0 sm:w-96"
+    >
       <div class="p-6 bg-gray-700 text-2xl font-bold sm:p-3">${display}</div>
       <div class="flex-1 grid grid-cols-4 gap-2 sm:auto-rows-[--spacing(12)]">
         ${CalculatorBtn(
           {
-            onClick: () => {
-              append('7');
-            },
             type: 'number',
+            onClick: () => {
+              append('7')
+            },
           },
           '7',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              append('8');
-            },
             type: 'number',
+            onClick: () => {
+              append('8')
+            },
           },
           '8',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              append('9');
-            },
             type: 'number',
+            onClick: () => {
+              append('9')
+            },
           },
           '9',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              load((prev, next) => prev / next);
-            },
             type: 'operation',
+            onClick: () => {
+              load((prev, next) => prev / next)
+            },
           },
           '/',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              append('4');
-            },
             type: 'number',
+            onClick: () => {
+              append('4')
+            },
           },
           '4',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              append('5');
-            },
             type: 'number',
+            onClick: () => {
+              append('5')
+            },
           },
           '5',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              append('6');
-            },
             type: 'number',
+            onClick: () => {
+              append('6')
+            },
           },
           '6',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              load((prev, next) => prev * next);
-            },
             type: 'operation',
+            onClick: () => {
+              load((prev, next) => prev * next)
+            },
           },
           '*',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              append('1');
-            },
             type: 'number',
+            onClick: () => {
+              append('1')
+            },
           },
           '1',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              append('2');
-            },
             type: 'number',
+            onClick: () => {
+              append('2')
+            },
           },
           '2',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              append('3');
-            },
             type: 'number',
+            onClick: () => {
+              append('3')
+            },
           },
           '3',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              load((prev, next) => prev - next);
-            },
             type: 'operation',
+            onClick: () => {
+              load((prev, next) => prev - next)
+            },
           },
           '-',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              append('0');
-            },
             type: 'number',
+            onClick: () => {
+              append('0')
+            },
           },
           '0',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              append('.');
-            },
             type: 'number',
+            onClick: () => {
+              append('.')
+            },
           },
           '.',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              reset();
-            },
             type: 'operation',
+            onClick: () => {
+              reset()
+            },
           },
           'C',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              load((prev, next) => prev + next);
-            },
             type: 'operation',
+            onClick: () => {
+              load((prev, next) => prev + next)
+            },
           },
           '+',
         )}
         ${CalculatorBtn(
           {
-            onClick: () => {
-              finish();
-            },
             type: 'equals',
+            onClick: () => {
+              finish()
+            },
           },
           '=',
         )}
       </div>
     </div>
-  `;
-};
+  `
+}
 
-type Operation = (prev: number, next: number) => number;
+type Operation = (prev: number, next: number) => number
 
-const EmptyDisplay = '-';
+const EmptyDisplay = '-'

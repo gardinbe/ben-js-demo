@@ -1,6 +1,10 @@
-import { define, type ExportedRouteComponent, type RouteDefinition } from '@ben-js/router';
+import {
+  define,
+  type ExportedRouteComponent,
+  type RouteDefinition,
+} from '@ben-js/router'
 
-export const routes: RouteDefinition[] = [
+export const routes: Array<RouteDefinition> = [
   {
     component: define(() => fakeDelay(import('~/pages/Home'))),
     path: '',
@@ -31,11 +35,13 @@ export const routes: RouteDefinition[] = [
     component: define(() => fakeDelay(import('~/pages/TestForm'))),
     path: 'test-form',
   },
-];
+]
 
 const fakeDelay = async (
   importer: Promise<ExportedRouteComponent>,
 ): Promise<ExportedRouteComponent> => {
-  await new Promise<void>((res) => setTimeout(res, 750));
-  return importer;
-};
+  await new Promise<void>(res => {
+    setTimeout(res, 750)
+  })
+  return importer
+}
