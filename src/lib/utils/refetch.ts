@@ -11,9 +11,11 @@ export const refetch = async <T extends Pojo>(
       return [null, new Error('Response was not ok')]
     }
 
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const data = (await res.json()) as T
     return [data, null]
   } catch (e) {
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     return [null, e as Error]
   }
 }

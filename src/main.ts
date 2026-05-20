@@ -1,3 +1,4 @@
+// oxlint-disable-next-line import/no-unassigned-import
 import '~/lib/styles/main.css'
 import { enableDevMode, printTree } from 'ben-js'
 

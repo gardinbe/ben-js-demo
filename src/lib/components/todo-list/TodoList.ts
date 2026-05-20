@@ -80,6 +80,7 @@ const logMessage = () => {
 
 const load = (): Array<Todo> => {
   const raw = localStorage.getItem('todos')
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   return raw ? (JSON.parse(raw) as Array<Todo>) : []
 }
 

@@ -1,5 +1,5 @@
 {
-  "extends": "@gardinbe/config/tsconfig/client",
+  "extends": "@gardinbe/config/tsconfig/vite",
   "compilerOptions": {
     "paths": {
       "~/*": ["./src/*"]
