@@ -109,14 +109,12 @@ const ApiWorkshopPage: RouteComponent = () => {
                 )}</span
               >
             </div>
-            ${Swap(
-              derived(() =>
-                renderGithub(
-                  repo.value.data,
-                  user.value.data,
-                  repo.value.error ?? user.value.error,
-                  repo.value.loading || user.value.loading,
-                ),
+            ${Swap(() =>
+              Github(
+                repo.value.data,
+                user.value.data,
+                repo.value.error ?? user.value.error,
+                repo.value.loading || user.value.loading,
               ),
             )}
           </section>
@@ -154,13 +152,11 @@ const ApiWorkshopPage: RouteComponent = () => {
                 )}
               </div>
             </div>
-            ${Swap(
-              derived(() =>
-                renderWeather(
-                  weather.value.data,
-                  weather.value.error,
-                  weather.value.loading,
-                ),
+            ${Swap(() =>
+              Weather(
+                weather.value.data,
+                weather.value.error,
+                weather.value.loading,
               ),
             )}
           </section>
@@ -168,18 +164,16 @@ const ApiWorkshopPage: RouteComponent = () => {
           <section class="grid gap-6 md:grid-cols-2">
             <div class="std-panel">
               <h2 class="m-0 mb-4 text-2xl font-black">Small endpoint</h2>
-              ${Swap(
-                derived(() =>
-                  renderAdvice(
-                    advice.value.data,
-                    advice.value.error,
-                    advice.value.loading,
-                  ),
+              ${Swap(() =>
+                Advice(
+                  advice.value.data,
+                  advice.value.error,
+                  advice.value.loading,
                 ),
               )}
             </div>
             ${Suspended(
-              renderUnwrappedExample(),
+              UnwrappedExample(),
               LoadingPanel({ label: 'Unwrapping Result' }),
             )}
           </section>
@@ -197,7 +191,7 @@ const cityCoordinates = {
   tokyo: { latitude: 35.6762, longitude: 139.6503 },
 }
 
-const renderGithub = (
+const Github = (
   repo: GithubRepo | null,
   user: GithubUser | null,
   error: string | null,
@@ -263,7 +257,7 @@ const renderGithub = (
   `
 }
 
-const renderWeather = (
+const Weather = (
   forecast: WeatherForecast | null,
   error: string | null,
   loading: boolean,
@@ -320,13 +314,13 @@ const renderWeather = (
         })}
       </div>
       <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        ${List(derived(() => days))}
+        ${List(() => days)}
       </div>
     </div>
   `
 }
 
-const renderAdvice = (
+const Advice = (
   advice: AdviceSlip | null,
   error: string | null,
   loading: boolean,
@@ -352,7 +346,7 @@ const renderAdvice = (
   `
 }
 
-const renderUnwrappedExample = async () => {
+const UnwrappedExample = async () => {
   const data = await unwrap(fetchGithubRepo('gardinbe', 'ben-js'))
 
   return html`

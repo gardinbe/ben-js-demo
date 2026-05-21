@@ -157,13 +157,11 @@ const PokemonLabPage: RouteComponent = () => {
             State machine
           </p>
           <h2 class="m-0 mb-4 text-2xl font-black">${status}</h2>
-          ${Swap(
-            derived(() =>
-              renderPokemonState(
-                state.value.data,
-                state.value.error,
-                state.value.loading,
-              ),
+          ${Swap(() =>
+            PokemonState(
+              state.value.data,
+              state.value.error,
+              state.value.loading,
             ),
           )}
         </aside>
@@ -183,9 +181,7 @@ const PokemonLabPage: RouteComponent = () => {
 
       <section class="std-panel">
         <h2 class="m-0 mb-4 text-2xl font-black">Recent lookups</h2>
-        ${Swap(
-          derived(() => renderHistory(history.value.length > 0, historyRows)),
-        )}
+        ${Swap(() => History(history.value.length > 0, historyRows))}
       </section>
     </div>
   `
@@ -193,7 +189,7 @@ const PokemonLabPage: RouteComponent = () => {
 
 export default PokemonLabPage
 
-const renderPokemonState = (
+const PokemonState = (
   pokemon: Pokemon | null,
   error: string | null,
   loading: boolean,
@@ -239,7 +235,7 @@ const renderPokemonState = (
   `
 }
 
-const renderHistory = (
+const History = (
   hasHistory: boolean,
   historyRows: Reactive<Array<KeyedComponent>>,
 ) =>

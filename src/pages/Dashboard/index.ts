@@ -171,11 +171,7 @@ const DashboardPage: RouteComponent = () => {
             Watchers
           </p>
           <h2 class="m-0 mb-4 text-2xl font-black">Activity trace</h2>
-          ${Swap(
-            derived(() =>
-              renderActivity(activity.value.length > 0, activityRows),
-            ),
-          )}
+          ${Swap(() => Activity(activity.value.length > 0, activityRows))}
         </aside>
       </section>
     </div>
@@ -206,7 +202,7 @@ const TaskRow = (task: DemoTask, onToggle: (next: boolean) => void) => html`
   </article>
 `
 
-const renderActivity = (
+const Activity = (
   hasActivity: boolean,
   activityRows: Reactive<Array<KeyedComponent>>,
 ) =>
