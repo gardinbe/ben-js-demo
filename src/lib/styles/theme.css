@@ -1,5 +1,5 @@
 /* stylelint-disable at-rule-no-unknown */
 
 @theme {
-  --font-sans: 'Roboto Condensed';
+  --font-sans: 'Archivo', 'Inter', 'Segoe UI', sans-serif;
 }

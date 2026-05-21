@@ -6,42 +6,25 @@ import {
 
 export const routes: Array<RouteDefinition> = [
   {
-    component: define(() => fakeDelay(import('~/pages/Home'))),
+    component: define(() => import('~/pages/Dashboard')),
     path: '',
   },
   {
-    component: define(() => fakeDelay(import('~/pages/About'))),
-    path: 'about',
-  },
-  {
-    children: [
-      {
-        component: define(() => fakeDelay(import('~/pages/Pokemon/[slug]'))),
-        path: '[slug]',
-      },
-    ],
-    component: define(() => fakeDelay(import('~/pages/Pokemon'))),
+    component: define(() => delayed(import('~/pages/PokemonLab'))),
     path: 'pokemon',
   },
   {
-    component: define(() => fakeDelay(import('~/pages/Calculator'))),
-    path: 'calculator',
-  },
-  {
-    component: define(() => fakeDelay(import('~/pages/TodoList'))),
-    path: 'todo-list',
-  },
-  {
-    component: define(() => fakeDelay(import('~/pages/TestForm'))),
-    path: 'test-form',
+    component: define(() => delayed(import('~/pages/ApiWorkshop'))),
+    path: 'apis',
   },
 ]
 
-const fakeDelay = async (
+const delayed = async (
   importer: Promise<ExportedRouteComponent>,
 ): Promise<ExportedRouteComponent> => {
-  await new Promise<void>(res => {
-    setTimeout(res, 750)
+  await new Promise<void>(resolve => {
+    setTimeout(resolve, 250)
   })
+
   return importer
 }

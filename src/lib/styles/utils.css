@@ -32,4 +32,79 @@
     bg-gray-100
     text-gray-900;
   }
+
+  .std-panel {
+    @apply rounded
+    border
+    border-zinc-800
+    bg-zinc-900/80
+    p-5
+    shadow-2xl
+    shadow-black/20;
+  }
+
+  .std-button {
+    @apply rounded
+    border
+    border-zinc-700
+    bg-zinc-100
+    px-3
+    py-2
+    text-sm
+    font-black
+    text-zinc-950
+    cursor-pointer
+    select-none
+    hover:bg-cyan-200
+    hover:border-cyan-200
+    active:bg-cyan-300
+    focus-visible:outline
+    focus-visible:outline-2
+    focus-visible:outline-offset-2
+    focus-visible:outline-cyan-300;
+  }
+
+  .std-field {
+    @apply rounded
+    border
+    border-zinc-700
+    bg-zinc-950
+    px-3
+    py-2
+    font-semibold
+    text-zinc-100
+    placeholder:text-zinc-600
+    focus-visible:outline
+    focus-visible:outline-2
+    focus-visible:outline-offset-2
+    focus-visible:outline-cyan-300;
+  }
+
+  .std-badge {
+    @apply inline-flex
+    min-h-7
+    items-center
+    rounded
+    border
+    border-cyan-300/30
+    bg-cyan-300/10
+    px-2
+    text-xs
+    font-black
+    uppercase
+    tracking-[0.18em]
+    text-cyan-200;
+  }
+
+  .std-nav-link {
+    @apply rounded
+    px-3
+    py-2
+    no-underline
+    text-zinc-300
+    hover:bg-zinc-800
+    hover:text-cyan-200
+    focus-visible:bg-zinc-800
+    focus-visible:text-cyan-200;
+  }
 }
