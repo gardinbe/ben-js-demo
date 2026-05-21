@@ -5,7 +5,7 @@ import { LoadingPanel } from '~/lib/components/LoadingPanel'
 import { routes } from '~/routes'
 
 export const App = () => html`
-  <div class="min-h-[100dvh] bg-zinc-950 text-zinc-100">
+  <div class="min-h-dvh bg-zinc-950 text-zinc-100">
     <header
       class="sticky top-0 z-20 border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur"
     >
