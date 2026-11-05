@@ -1,4 +1,4 @@
-import { html, normalize, type Props } from 'ben-js'
+import { html, normalize, type Props } from '@ben-js/core'
 
 export type LoadingPanelProps = {
   label: string

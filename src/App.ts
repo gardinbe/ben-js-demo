@@ -1,5 +1,5 @@
+import { html, Suspended } from '@ben-js/core'
 import { Link, Route, Router } from '@ben-js/router'
-import { html, Suspended } from 'ben-js'
 
 import { LoadingPanel } from '~/lib/components/LoadingPanel'
 import { routes } from '~/routes'
@@ -12,28 +12,49 @@ export const App = () => html`
       <div
         class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3"
       >
-        <a
-          class="unstyled-link flex items-center gap-3"
-          href="/"
-        >
-          <span
-            class="grid size-9 place-items-center rounded bg-cyan-300 font-black text-zinc-950"
-          >
-            b
-          </span>
-          <span>
-            <span
-              class="block text-sm font-semibold uppercase tracking-[0.22em] text-cyan-200"
+        ${Link(
+          {
+            class: 'unstyled-link flex items-center gap-3',
+            href: '/',
+          },
+          html`<span
+              class="grid size-9 place-items-center rounded bg-cyan-300 font-black text-zinc-950"
             >
-              ben-js
+              b
             </span>
-            <span class="block text-lg font-black leading-5">Systems demo</span>
-          </span>
-        </a>
+            <span>
+              <span
+                class="block text-sm font-semibold uppercase tracking-[0.22em] text-cyan-200"
+              >
+                ben-js
+              </span>
+              <span class="block text-lg font-black leading-5"
+                >Systems demo</span
+              >
+            </span>`,
+        )}
         <nav class="flex flex-wrap items-center gap-2 text-sm font-semibold">
-          ${Link({ class: 'std-nav-link', href: '/' }, 'Dashboard')}
-          ${Link({ class: 'std-nav-link', href: '/pokemon' }, 'Pokemon lab')}
-          ${Link({ class: 'std-nav-link', href: '/apis' }, 'API workshop')}
+          ${Link(
+            {
+              class: 'std-nav-link',
+              href: '/',
+            },
+            'Dashboard',
+          )}
+          ${Link(
+            {
+              class: 'std-nav-link',
+              href: '/pokemon',
+            },
+            'Pokemon lab',
+          )}
+          ${Link(
+            {
+              class: 'std-nav-link',
+              href: '/apis',
+            },
+            'API workshop',
+          )}
         </nav>
       </div>
     </header>

@@ -1,16 +1,8 @@
+import { html, List, normalize, type Props, ref, Swap } from '@ben-js/core'
+import { derived, reactive } from '@ben-js/reactivity'
 import { type RouteComponent } from '@ben-js/router'
-import {
-  derived,
-  html,
-  type KeyedComponent,
-  List,
-  type Reactive,
-  reactive,
-  ref,
-  Swap,
-} from 'ben-js'
 
-import { Button } from '~/lib/components/Button'
+import { BaseButton, Button } from '~/lib/components/Button'
 import { Metric } from '~/lib/components/Metric'
 import { SectionTitle } from '~/lib/components/SectionTitle'
 import {
@@ -27,57 +19,25 @@ type PokemonHistoryItem = {
   name: string
   sprite: string | null
   types: string
+  onClick: () => void
 }
 
 const PokemonLabPage: RouteComponent = () => {
   const input = ref<HTMLInputElement>()
-  const search = reactive('pikachu')
+  const query = reactive('')
   const state = reactive(createRequestState<Pokemon>())
   const history = reactive<Array<PokemonHistoryItem>>([])
   const status = derived(() => getRequestStatus(state.value))
-  const statRows = derived(
-    () =>
-      state.value.data?.stats.map(stat => ({
-        component: html`
-          <div
-            class="grid grid-cols-[110px_1fr_44px] items-center gap-3 text-sm"
-          >
-            <span class="font-semibold text-zinc-300">${stat.stat.name}</span>
-            <span class="h-2 overflow-hidden rounded bg-zinc-800">
-              <span
-                class="block h-full rounded bg-cyan-300"
-                style="width: ${Math.min(100, stat.base_stat)}%"
-              ></span>
-            </span>
-            <span class="text-right font-bold text-white"
-              >${stat.base_stat}</span
-            >
-          </div>
-        `,
-        key: stat.stat.name,
-      })) ?? [],
-  )
+
   const historyRows = derived(() =>
     history.value.map(item => ({
-      component: html`
-        <button
-          class="rounded border border-zinc-800 bg-zinc-950 p-3 text-left hover:border-cyan-400"
-        >
-          <img
-            class="mb-2 size-16 object-contain"
-            src="${item.sprite ?? ''}"
-            alt=""
-          />
-          <span class="block font-bold">${capitalize(item.name)}</span>
-          <span class="text-xs text-zinc-500">${item.types}</span>
-        </button>
-      `,
+      component: PokemonHistoryButton(item),
       key: item.id,
     })),
   )
 
   const loadPokemon = async () => {
-    const name = search.value.trim()
+    const name = query.value.trim()
 
     if (!name) {
       state.value = {
@@ -93,6 +53,7 @@ const PokemonLabPage: RouteComponent = () => {
     state.value = applyRequestResult(result, state.value)
 
     const [pokemon] = result
+
     if (pokemon) {
       history.value = [
         {
@@ -100,14 +61,27 @@ const PokemonLabPage: RouteComponent = () => {
           name: pokemon.name,
           sprite: pokemon.sprites.front_default,
           types: pokemon.types.map(entry => entry.type.name).join(' / '),
+          onClick: () => {
+            void search(pokemon.name)
+          },
         },
         ...history.value.filter(item => item.id !== pokemon.id),
       ].slice(0, 6)
     }
   }
 
+  const search = async (value: string) => {
+    query.value = value
+
+    if (input.el) {
+      input.el.value = value
+    }
+
+    await loadPokemon()
+  }
+
   input.on('input', () => {
-    search.value = input.el?.value ?? ''
+    query.value = input.el?.value ?? ''
   })
 
   input.on('keydown', ev => {
@@ -116,7 +90,7 @@ const PokemonLabPage: RouteComponent = () => {
     }
   })
 
-  void loadPokemon()
+  void search('pikachu')
 
   return html`
     <div class="space-y-6">
@@ -131,17 +105,13 @@ const PokemonLabPage: RouteComponent = () => {
             ref="${input}"
             class="std-field min-w-64"
             placeholder="pikachu, ditto, 25..."
-            value="${search}"
+            value="${query}"
           />
           ${Button({ onClick: loadPokemon }, 'Fetch Pokemon')}
           ${Button(
             {
               onClick: () => {
-                search.value = 'mewtwo'
-                if (input.el) {
-                  input.el.value = search.value
-                }
-                void loadPokemon()
+                void search('mewtwo')
               },
             },
             'Try mewtwo',
@@ -170,18 +140,49 @@ const PokemonLabPage: RouteComponent = () => {
           <div class="mb-4 flex items-center justify-between gap-3">
             <h2 class="m-0 text-2xl font-black">Battle stats</h2>
             <span class="std-badge"
-              >${derived(
-                () => state.value.data?.types[0]?.type.name ?? 'waiting',
-              )}</span
+              >${() => state.value.data?.types[0]?.type.name ?? 'waiting'}</span
             >
           </div>
-          <div class="grid gap-3">${List(statRows)}</div>
+          <div class="grid gap-3">
+            ${List(
+              () =>
+                state.value.data?.stats.map(stat => ({
+                  component: html`
+                    <div
+                      class="grid grid-cols-[110px_1fr_44px] items-center gap-3 text-sm"
+                    >
+                      <span class="font-semibold text-zinc-300"
+                        >${stat.stat.name}</span
+                      >
+                      <span class="h-2 overflow-hidden rounded bg-zinc-800">
+                        <span
+                          class="block h-full rounded bg-cyan-300"
+                          style="width: ${Math.min(100, stat.base_stat)}%"
+                        ></span>
+                      </span>
+                      <span class="text-right font-bold text-white"
+                        >${stat.base_stat}</span
+                      >
+                    </div>
+                  `,
+                  key: stat.stat.name,
+                })) ?? [],
+            )}
+          </div>
         </div>
       </section>
 
       <section class="std-panel">
         <h2 class="m-0 mb-4 text-2xl font-black">Recent lookups</h2>
-        ${Swap(() => History(history.value.length > 0, historyRows))}
+        ${Swap(() =>
+          history.value.length > 0
+            ? html`<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+                ${List(historyRows)}
+              </div>`
+            : html`<p class="text-zinc-400">
+                Search results will collect here.
+              </p>`,
+        )}
       </section>
     </div>
   `
@@ -235,12 +236,27 @@ const PokemonState = (
   `
 }
 
-const History = (
-  hasHistory: boolean,
-  historyRows: Reactive<Array<KeyedComponent>>,
-) =>
-  hasHistory
-    ? html`<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
-        ${List(historyRows)}
-      </div>`
-    : html`<p class="text-zinc-400">Search results will collect here.</p>`
+const PokemonHistoryButton = (props: Props<PokemonHistoryItem>) => {
+  const { name, onClick, sprite, types } = normalize(props)
+  const button = ref<HTMLButtonElement>()
+
+  button.on('click', () => {
+    onClick.value()
+  })
+
+  return BaseButton(
+    {
+      class:
+        'rounded border border-zinc-800 bg-zinc-950 p-3 text-left hover:border-cyan-400',
+    },
+    html`
+      <img
+        class="mb-2 size-16 object-contain"
+        src="${sprite ?? ''}"
+        alt=""
+      />
+      <span class="block font-bold">${() => capitalize(name.value)}</span>
+      <span class="text-xs text-zinc-500">${types}</span>
+    `,
+  )
+}

@@ -1,5 +1,6 @@
+import { html, List, Suspended, Swap } from '@ben-js/core'
+import { derived, reactive } from '@ben-js/reactivity'
 import { type RouteComponent } from '@ben-js/router'
-import { derived, html, List, reactive, Suspended, Swap } from 'ben-js'
 
 import { Button } from '~/lib/components/Button'
 import { LoadingPanel } from '~/lib/components/LoadingPanel'
@@ -51,7 +52,7 @@ const ApiWorkshopPage: RouteComponent = () => {
     repo.value = { ...repo.value, loading: true }
     user.value = { ...user.value, loading: true }
     const [repoResult, userResult] = await Promise.all([
-      fetchGithubRepo('gardinbe', 'ben-js'),
+      fetchGithubRepo('gardinbe', '@ben-js/core'),
       fetchGithubUser('gardinbe'),
     ])
     repo.value = applyRequestResult(repoResult, repo.value)
@@ -102,11 +103,9 @@ const ApiWorkshopPage: RouteComponent = () => {
             <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
               <h2 class="m-0 text-2xl font-black">GitHub package signal</h2>
               <span class="std-badge"
-                >${derived(
-                  () =>
-                    formatDate(repo.value.data?.updated_at ?? '') ??
-                    'not loaded',
-                )}</span
+                >${() =>
+                  formatDate(repo.value.data?.updated_at ?? '') ??
+                  'not loaded'}</span
               >
             </div>
             ${Swap(() =>
@@ -347,7 +346,7 @@ const Advice = (
 }
 
 const UnwrappedExample = async () => {
-  const data = await unwrap(fetchGithubRepo('gardinbe', 'ben-js'))
+  const data = await unwrap(fetchGithubRepo('gardinbe', '@ben-js/core'))
 
   return html`
     <div class="std-panel">

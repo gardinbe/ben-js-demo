@@ -1,8 +1,6 @@
-import { enableDevMode, printTree } from 'ben-js'
+import { printTree } from '@ben-js/core/dev'
 
 import { App } from '~/App'
-
-enableDevMode()
 
 const app = App()
 app.mount('#app')

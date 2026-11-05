@@ -1,4 +1,5 @@
-import { derived, html, normalize, type Props } from 'ben-js'
+import { html, normalize, type Props } from '@ben-js/core'
+import { derived } from '@ben-js/reactivity'
 
 export type MetricProps = {
   label: string

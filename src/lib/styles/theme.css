@@ -1,5 +1,3 @@
-/* stylelint-disable at-rule-no-unknown */
-
 @theme {
-  --font-sans: 'Archivo', 'Inter', 'Segoe UI', sans-serif;
+  --font-sans: 'Ubuntu Sans', sans-serif;
 }

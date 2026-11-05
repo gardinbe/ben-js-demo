@@ -19,24 +19,25 @@
     "fix:oxfmt": "oxfmt"
   },
   "dependencies": {
+    "@ben-js/core": "workspace:*",
+    "@ben-js/reactivity": "workspace:*",
     "@ben-js/router": "workspace:*",
-    "ben-js": "workspace:*",
-    "tailwindcss": "^4.1.13"
+    "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
     "@gardinbe/config": "github:gardinbe/config",
-    "@tailwindcss/vite": "^4.1.13",
-    "@types/node": "^24.3.1",
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/node": "^24.12.4",
     "npm-run-all": "^4.1.5",
     "oxfmt": "^0.51.0",
-    "oxlint": "^1.66.0",
+    "oxlint": "^1.67.0",
     "oxlint-tsgolint": "^0.23.0",
-    "stylelint": "^17.11.1",
-    "typescript": "^5.9.2",
-    "vite": "^7.1.5"
+    "stylelint": "^17.12.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.3"
   },
   "engines": {
     "node": ">24.3.0"
   },
-  "packageManager": "pnpm@11.2.1"
+  "packageManager": "pnpm@11.18.0+sha512.33d83c77da82f49fba836925c6f1b841181ec3132b670639bd012f7075f5c7cf634c5f870147c19aae7478fac01df09d8892e880454896edd23ee9b33757563c"
 }

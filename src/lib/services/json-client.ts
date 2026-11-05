@@ -12,12 +12,15 @@ export const requestJson = async <T>(
   decoder: Decoder<T>,
 ): Promise<Result<T>> => {
   try {
-    const response = await fetch(request.url, {
-      headers: {
-        accept: 'application/json',
-      },
-      ...request.init,
-    })
+    const [response] = await Promise.all([
+      fetch(request.url, {
+        headers: {
+          accept: 'application/json',
+        },
+        ...request.init,
+      }),
+      delay(500),
+    ])
 
     if (!response.ok) {
       return [
@@ -62,3 +65,8 @@ export const createUrl = (
 
 const toError = (error: unknown) =>
   error instanceof Error ? error : new Error('Unknown request error')
+
+const delay = (ms: number) =>
+  new Promise(resolve => {
+    setTimeout(resolve, ms)
+  })
